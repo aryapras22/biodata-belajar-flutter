@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tugas1_187221026/pages/todo_list.dart';
+import 'pages/bio_kucing.dart';
 
 void main() {
   runApp(const MyApp());
@@ -233,9 +235,24 @@ class _HomepageState extends State<Homepage> {
           drawer: Drawer(
             child: ListView(
               children: <Widget>[
-                Container(
-                  child: Text("Argh"),
-                )
+                ListTile(
+                  title: Text('Bio Kucing'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BioKucingPage()),
+                    );
+                  },
+                ),
+                ListTile(
+                  title: Text("To - Do List"),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TodoListPage()));
+                  },
+                ),
               ],
             ),
           )),
