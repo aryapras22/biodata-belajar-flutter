@@ -21,7 +21,14 @@ class MyApp extends StatelessWidget {
   final ThemeData defaultTheme = ThemeData(
       primaryColor: const Color.fromRGBO(254, 251, 246, 1),
       scaffoldBackgroundColor: const Color.fromRGBO(254, 251, 246, 1),
+      colorScheme:
+          ColorScheme.fromSeed(seedColor: Color.fromRGBO(15, 44, 89, 1)),
       useMaterial3: true,
+      appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromRGBO(254, 251, 246, 1),
+          iconTheme: IconThemeData(
+            color: Color.fromRGBO(15, 44, 89, 1),
+          )),
       fontFamily: GoogleFonts.ibmPlexSans().fontFamily,
       textTheme: const TextTheme(
           displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugas1_187221026/pages/booknotes/booknotes.dart';
 import '../bio_kucing.dart';
 import './feedbacksection.dart';
 import './profilesection.dart';
@@ -19,15 +20,20 @@ class _HomepageState extends State<Homepage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(254, 251, 246, 1),
           title: const Text('Profile'),
           centerTitle: true,
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(
-                icon: Icon(Icons.account_circle_rounded),
+                icon: Icon(
+                  Icons.account_circle_rounded,
+                ),
               ),
               Tab(
-                icon: Icon(Icons.nature_people),
+                icon: Icon(
+                  Icons.nature_people,
+                ),
               ),
             ],
           ),
@@ -46,7 +52,7 @@ class _HomepageState extends State<Homepage> {
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                child: Text(
+                child: const Text(
                   'Menu',
                   style: TextStyle(
                     color: Colors.white,
@@ -56,7 +62,7 @@ class _HomepageState extends State<Homepage> {
               ),
               ListTile(
                 leading: const Icon(Icons.pets), // Customize icon
-                title: Text('Bio Kucing'),
+                title: const Text('Bio Kucing'),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -65,8 +71,8 @@ class _HomepageState extends State<Homepage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.list), // Customize icon
-                title: Text('To-Do List'),
+                leading: const Icon(Icons.list), // Customize icon
+                title: const Text('To-Do List'),
                 onTap: () {
                   // Navigator.push(
                   //   context,
@@ -74,6 +80,16 @@ class _HomepageState extends State<Homepage> {
                   // );
                 },
               ),
+              ListTile(
+                leading: const Icon(Icons.book),
+                title: const Text("Book Notes"),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => (BookNotesPage())),
+                  );
+                },
+              )
             ],
           ),
         ),
