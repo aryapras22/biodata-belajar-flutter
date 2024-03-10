@@ -21,6 +21,13 @@ class _BookNotesPageState extends State<BookNotesPage> {
       description: 'Description 2',
       notes: [],
     ),
+    Book(
+      photo: 'assets/book2.jpg',
+      title: 'Book 2',
+      writer: 'Author 2',
+      description: 'Description 2',
+      notes: [],
+    )
     // Add more books here
   ];
 
@@ -30,54 +37,56 @@ class _BookNotesPageState extends State<BookNotesPage> {
       appBar: AppBar(
         title: Text('Book Notes'),
       ),
-      body: ListView.builder(
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: MediaQuery.of(context).size.width > 600 ? 4 : 2,
+          childAspectRatio: 0.7,
+        ),
         itemCount: books.length,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BookDetailsPage(book: books[index]),
-                ),
-              );
-            },
-            child: Container(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Image.asset(
-                    books[index].photo,
-                    width: 80,
-                    height: 120,
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          books[index].title,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          books[index].writer,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          books[index].description,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
+          return buildBookContainer(books[index]);
         },
+      ),
+    );
+  }
+
+  Widget buildBookContainer(Book book) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BookDetailsPage(book: book),
+          ),
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              book.photo,
+              width: 80,
+              height: 120,
+            ),
+            SizedBox(height: 16),
+            Text(
+              book.title,
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 8),
+            Text(
+              book.writer,
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 8),
+            Text(
+              book.description,
+              style: TextStyle(fontSize: 14),
+            ),
+          ],
+        ),
       ),
     );
   }
