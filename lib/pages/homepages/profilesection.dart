@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProfileSection extends StatefulWidget {
   const ProfileSection({Key? key}) : super(key: key);
@@ -8,6 +9,14 @@ class ProfileSection extends StatefulWidget {
 }
 
 class _ProfileSectionState extends State<ProfileSection> {
+  late DateTime date;
+  final DateFormat formatter = DateFormat.yMd();
+  @override
+  void initState() {
+    super.initState();
+    date = DateTime.now(); // Initialize date with current date
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -40,40 +49,97 @@ class _ProfileSectionState extends State<ProfileSection> {
       children: [
         _buildExperienceItem(
           type: "Education",
-          date: "2022-Present",
+          date: DatePickerWidget(
+            initialDate: DateTime.now(),
+            onDateChanged: (newDate) {
+              setState(() {
+                // Update the date value
+                String formatted = formatter.format(newDate);
+                date = DateTime.parse(formatted);
+              });
+            },
+          ),
           title: "Airlangga University",
           subtitle: "Information System Undergraduate",
           trailing: "GPA 3.75/4.00",
         ),
         _buildExperienceItem(
           type: "Organizational Experience",
-          date: "Dec 2023 — Present",
+          date: DatePickerWidget(
+            initialDate: DateTime.now(),
+            onDateChanged: (newDate) {
+              setState(() {
+                // Update the date value
+                date = newDate;
+              });
+            },
+          ),
           title: "Chairman of HIMSI UNAIR",
         ),
         _buildExperienceItem(
           type: "",
-          date: "Dec 2022 — Nov 2023",
+          date: DatePickerWidget(
+            initialDate: DateTime.now(),
+            onDateChanged: (newDate) {
+              setState(() {
+                // Update the date value
+                date = newDate;
+              });
+            },
+          ),
           title: "Organizational Supervisory Board HIMSI UNAIR",
         ),
         _buildExperienceItem(
           type: "",
-          date: "Apr 2023 — Aug 2023",
+          date: DatePickerWidget(
+            initialDate: DateTime.now(),
+            onDateChanged: (newDate) {
+              setState(() {
+                // Update the date value
+                date = newDate;
+              });
+            },
+          ),
           title: "Event Staff Pendekar FST Universitas Airlangga",
         ),
         _buildExperienceItem(
           type: "",
-          date: "Feb 2023 — Mar 2023",
+          date: DatePickerWidget(
+            initialDate: DateTime.now(),
+            onDateChanged: (newDate) {
+              setState(() {
+                // Update the date value
+                date = newDate;
+              });
+            },
+          ),
           title: "Liaison Officer Get to Know Airlangga 2.0",
         ),
         _buildExperienceItem(
           type: "Achievement",
-          date: "Nov 2022",
+          date: DatePickerWidget(
+            initialDate: DateTime.now(),
+            onDateChanged: (newDate) {
+              setState(() {
+                // Update the date value
+                date = newDate;
+              });
+            },
+          ),
           title: "Finalist Komescom 2022",
           subtitle: "Nov 2022",
         ),
         _buildExperienceItem(
           type: "",
-          date: "May 2023",
+          date: DatePickerWidget(
+            initialDate: DateTime.now(),
+            onDateChanged: (newDate) {
+              setState(() {
+                // Update the date value
+                date = newDate;
+              });
+            },
+          ),
           title: "3rd Place at Jogja Information Technology Sessions UGM",
         ),
 
@@ -84,7 +150,7 @@ class _ProfileSectionState extends State<ProfileSection> {
 
   Widget _buildExperienceItem({
     required String type,
-    required String date,
+    required Widget date,
     required String title,
     String? subtitle,
     String? trailing,
@@ -101,10 +167,7 @@ class _ProfileSectionState extends State<ProfileSection> {
             ),
           ),
         ListTile(
-          leading: Text(
-            date,
-            style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
-          ),
+          leading: date,
           title: Text(
             title,
             style: const TextStyle(fontSize: 13),
@@ -114,5 +177,57 @@ class _ProfileSectionState extends State<ProfileSection> {
         ),
       ],
     );
+  }
+}
+
+class DatePickerWidget extends StatefulWidget {
+  final DateTime initialDate;
+  final ValueChanged<DateTime> onDateChanged;
+
+  const DatePickerWidget({
+    Key? key,
+    required this.initialDate,
+    required this.onDateChanged,
+  }) : super(key: key);
+
+  @override
+  _DatePickerWidgetState createState() => _DatePickerWidgetState();
+}
+
+class _DatePickerWidgetState extends State<DatePickerWidget> {
+  late DateTime selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedDate = widget.initialDate;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        _selectDate(context);
+      },
+      child: Text(
+        DateFormat.yMMMM().format(selectedDate),
+        style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        widget.onDateChanged(selectedDate);
+      });
+    }
   }
 }
